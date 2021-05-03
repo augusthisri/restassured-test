@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="reqresAPISuite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="com.test.crud.GetAPI932394"/>
+      <class name="com.test.crud.PostAPI932394"/>
+      <class name="com.test.crud.CreateAPI932394"/>
+       <class name="com.test.crud.CreateAPIUser"/>
+        <class name="com.test.crud.PUTAPI932394"/>
+         <class name="com.test.crud.DeleteAPI932394"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
