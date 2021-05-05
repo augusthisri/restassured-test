@@ -12,7 +12,7 @@ public class DeleteAPI932394 extends BaseConfig {
 	String requestUri = "https://reqres.in/api/users/2";
 
 	@Test
-	void checkResponseBody() {
+	void deleteUserAssertion() {
 
 		logger.info("*********Started DeleteAPI932394 **********");
 

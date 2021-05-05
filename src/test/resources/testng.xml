@@ -5,7 +5,7 @@
     <classes>
       <class name="com.test.crud.GetAPI932394"/>
       <class name="com.test.crud.CreateAPI932394"/>
-       <class name="com.test.crud.CreateAPIUser"/>
+       <class name="com.test.crud.SigninAPIUser932394"/>
         <class name="com.test.crud.PutAPI932394"/>
          <class name="com.test.crud.DeleteAPI932394"/>
     </classes>

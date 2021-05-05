@@ -14,7 +14,7 @@ public class PutAPI932394 extends BaseConfig {
 	String requestUri = "https://reqres.in/api/users/2";
 
 	@Test
-	public void putUserAasertion1() {
+	public void putUserAssertion() {
 
 		logger.info("*********Started PutAPI932394  **********");
 
@@ -46,39 +46,5 @@ public class PutAPI932394 extends BaseConfig {
 		logger.info("Content-Type is ==>" + response.getHeader(contentType));
 	}
 
-	@Test
-	public void putUserAasertion2() {
-//
-//		logger.info("*********Started PutAPI932394  **********");
-//		
-//		Map<String , Object> map = new  HashMap <String , Object>();
-//	
-//		map.put("FirstName", "morpheus");
-//		map.put("LastName", "");
-//
-//		logger.info("Input Json Data::: " + map );
-//		Response response = BaseConfig.putRequest(requestUri, map);
-//
-//		
-//		
-//		logger.info("***********  Checking Response Body **********");
-//
-//		JsonPath responseJson = response.getBody().jsonPath();
-//		logger.info("Response Body==>" + response.getBody().asString());
-//		Assert.assertEquals(responseJson.get("FirstName"), "morpheus");
-//		Assert.assertEquals(responseJson.get("LastName"), "zion resident");
-//
-//		logger.info("ressponseJson " + responseJson.prettify());
-//		logger.info("***********  Checking Response Body **********");
-//
-//		logger.info("***********  Checking Status Line **********");
-//
-//		String statusLine = response.getStatusLine(); // Getting status Line
-//		logger.info("Status Line is ==>" + statusLine);
-//		Assert.assertEquals(statusLine, "HTTP/1.1 200 OK");
-//
-//		String contentType = response.header("Content-Type");
-//		logger.info("Content-Type is ==>" + response.getHeader(contentType));
-	}
 
 }

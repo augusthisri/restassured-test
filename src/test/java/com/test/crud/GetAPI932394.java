@@ -14,7 +14,7 @@ public class GetAPI932394 extends BaseConfig {
 	String requestUri = "https://reqres.in/api/users";
 
 	@Test
-	void checkResponseBody() {
+	void getUserAssertion() {
 
 		logger.info("*********Started GetAPI932394 **********");
 		logger.info("***********  Checking Response Body **********");
