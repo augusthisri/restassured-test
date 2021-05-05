@@ -1,66 +1,65 @@
 package com.test.crud;
 
-import org.json.simple.JSONObject;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.base.test.BaseConfig;
+import com.test.base.BaseConfig;
 
-import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 public class CreateAPIUser extends BaseConfig {
 
-	@BeforeClass
-	void createUser() {
-
-		logger.info("*********Started CreateAPIUser **********");
-		// Specifying request Payload in JSON format
-		JSONObject requestParams = new JSONObject();
-		requestParams.put("name", "morpheus");
-		requestParams.put("job", "leader");
-
-		// Specify body type is Json/content type
-		reqSpec.header("Content-Type", "application/json");
-
-		// Add the Json to the body of the request
-		reqSpec.body(requestParams.toJSONString());
-
-		// POST request
-		response = RestAssured.given().spec(reqSpec).basePath("/users").body(requestParams).post();
-
-	}
+	String requestUri = "https://reqres.in/api/login";
 
 	@Test
-	void checkStatusCode() {
-		logger.info("***********  Checking Status Code **********");
+	public void createUser() {
+		logger.info("*********Started CreateAPIUser **********");
 
+		StringBuffer str = new StringBuffer();
+		File file = new File("src/test/resources/putData.json");
+		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+			String line = "";
+			while ((line = in.readLine()) != null) {
+				str.append(line);
+			}
+		} catch (FileNotFoundException e) {
+			logger.error(e);
+		} catch (IOException e) {
+			logger.error(e);
+		}
+
+		logger.info("Input Json Data::: " + str.toString());
+		Response response = BaseConfig.postRequest(requestUri, str.toString());
+
+		logger.info("***********  Checking Response Body **********");
 		int statusCode = response.getStatusCode();
 		logger.info("Status Code is ==>" + statusCode);
-		Assert.assertEquals(statusCode, 404);
+		Assert.assertEquals(statusCode, 400);
 
-	}
-
-	@Test
-	void checkstatusLine() {
 		logger.info("***********  Checking Status Line **********");
 
 		String statusLine = response.getStatusLine(); // Getting status Line
 		logger.info("Status Line is ==>" + statusLine);
-		Assert.assertEquals(statusLine, "HTTP/1.1 404 Not Found");
+		Assert.assertEquals(statusLine, "HTTP/1.1 400 Bad Request");
 
-	}
-//	@Test
-//	void checkResponseBody1() {
-//		String responseBody = response.getBody().asString();
-//		logger.info("Response Body==>" + responseBody);
-//
-//		logger.info("***********  Checking Response Body **********");
-//	}
+		logger.info("***********  Checking Content Type **********");
+		String contentType = response.header("Content-Type");
+		logger.info("Content type is ==>" + contentType);
+		Assert.assertEquals(contentType, "application/json; charset=utf-8");
 
-	@AfterClass
-	void tearDown() {
-		logger.info("*********  Finished CreateAPIUser **********");
+		logger.info("***********  Checking Server Type **********");
+		String serverType = response.header("Server");
+		Assert.assertEquals(serverType, "cloudflare");
+
+		logger.info("***********  Checking Content Length **********");
+		String contentLength = response.header("Content-Length");
+		Assert.assertTrue(Integer.parseInt(contentLength) < 150);
 	}
+
 }

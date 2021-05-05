@@ -2,39 +2,30 @@ package com.test.crud;
 
 import org.json.simple.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.base.test.BaseConfig;
+import com.test.base.BaseConfig;
 
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 
 public class PutAPI932394 extends BaseConfig {
 
-	@BeforeClass
-	void postUser() {
-		logger.info("*********Started PutAPI932394 **********");
-		
-		// Specifying request Payload in JSON format
-		JSONObject requestParams = new JSONObject();
-		requestParams.put("FirstName", "morpheus");
-		requestParams.put("LastName", "zion resident");
-
-		// Specify body type is Json/content type
-		reqSpec.header("Content-Type", "application/json");
-
-		// Add the Json to the body of the request
-		reqSpec.body(requestParams.toJSONString());
-
-		// POST request
-		response = RestAssured.given().spec(reqSpec).basePath("api/users/2").body(requestParams).put();
-
-	}
+	String requestUri = "https://reqres.in/api/users/2";
 
 	@Test
-	void checkResponseBody() {
+	public void putUserAasertion1() {
+
+		logger.info("*********Started PutAPI932394  **********");
+
+		// Specifying request Payload in JSON format
+		JSONObject str = new JSONObject();
+		str.put("FirstName", "morpheus");
+		str.put("LastName", "zion resident");
+
+		logger.info("Input Json Data::: " + str.toString());
+		Response response = BaseConfig.putRequest(requestUri, str.toString());
+
 		logger.info("***********  Checking Response Body **********");
 
 		JsonPath responseJson = response.getBody().jsonPath();
@@ -44,10 +35,7 @@ public class PutAPI932394 extends BaseConfig {
 
 		logger.info("ressponseJson " + responseJson.prettify());
 		logger.info("***********  Checking Response Body **********");
-	}
 
-	@Test
-	void checkstatusLine() {
 		logger.info("***********  Checking Status Line **********");
 
 		String statusLine = response.getStatusLine(); // Getting status Line
@@ -58,8 +46,39 @@ public class PutAPI932394 extends BaseConfig {
 		logger.info("Content-Type is ==>" + response.getHeader(contentType));
 	}
 
-	@AfterClass
-	void tearDown() {
-		logger.info("*********  Finished PutAPI932394 **********");
+	@Test
+	public void putUserAasertion2() {
+//
+//		logger.info("*********Started PutAPI932394  **********");
+//		
+//		Map<String , Object> map = new  HashMap <String , Object>();
+//	
+//		map.put("FirstName", "morpheus");
+//		map.put("LastName", "");
+//
+//		logger.info("Input Json Data::: " + map );
+//		Response response = BaseConfig.putRequest(requestUri, map);
+//
+//		
+//		
+//		logger.info("***********  Checking Response Body **********");
+//
+//		JsonPath responseJson = response.getBody().jsonPath();
+//		logger.info("Response Body==>" + response.getBody().asString());
+//		Assert.assertEquals(responseJson.get("FirstName"), "morpheus");
+//		Assert.assertEquals(responseJson.get("LastName"), "zion resident");
+//
+//		logger.info("ressponseJson " + responseJson.prettify());
+//		logger.info("***********  Checking Response Body **********");
+//
+//		logger.info("***********  Checking Status Line **********");
+//
+//		String statusLine = response.getStatusLine(); // Getting status Line
+//		logger.info("Status Line is ==>" + statusLine);
+//		Assert.assertEquals(statusLine, "HTTP/1.1 200 OK");
+//
+//		String contentType = response.header("Content-Type");
+//		logger.info("Content-Type is ==>" + response.getHeader(contentType));
 	}
+
 }

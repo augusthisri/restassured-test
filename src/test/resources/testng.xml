@@ -4,10 +4,9 @@
   <test thread-count="5" name="Test">
     <classes>
       <class name="com.test.crud.GetAPI932394"/>
-      <class name="com.test.crud.PostAPI932394"/>
       <class name="com.test.crud.CreateAPI932394"/>
        <class name="com.test.crud.CreateAPIUser"/>
-        <class name="com.test.crud.PUTAPI932394"/>
+        <class name="com.test.crud.PutAPI932394"/>
          <class name="com.test.crud.DeleteAPI932394"/>
     </classes>
   </test> <!-- Test -->
