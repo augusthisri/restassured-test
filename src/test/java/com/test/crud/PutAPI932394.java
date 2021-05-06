@@ -1,5 +1,11 @@
 package com.test.crud;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,10 +24,19 @@ public class PutAPI932394 extends BaseConfig {
 
 		logger.info("*********Started PutAPI932394  **********");
 
-		// Specifying request Payload in JSON format
-		JSONObject str = new JSONObject();
-		str.put("FirstName", "morpheus");
-		str.put("LastName", "zion resident");
+		StringBuffer str = new StringBuffer();
+		File file = new File("src/test/resources/putData.json");
+		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+			String line = "";
+			while ((line = in.readLine()) != null) {
+				str.append(line);
+			}
+		} catch (FileNotFoundException e) {
+			logger.error(e);
+		} catch (IOException e) {
+			logger.error(e);
+		}
+
 
 		logger.info("Input Json Data::: " + str.toString());
 		Response response = BaseConfig.putRequest(requestUri, str.toString());
