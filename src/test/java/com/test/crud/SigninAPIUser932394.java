@@ -1,15 +1,10 @@
 package com.test.crud;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.test.base.BaseConfig;
+import com.test.utils.TestUtils;
 
 import io.restassured.response.Response;
 
@@ -19,29 +14,17 @@ public class SigninAPIUser932394 extends BaseConfig {
 
 	@Test
 	public void createUser() {
+
 		logger.info("*********Started CreateAPIUser **********");
 
-		StringBuffer str = new StringBuffer();
-		File file = new File("src/test/resources/createUser.json");
-		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-			String line = "";
-			while ((line = in.readLine()) != null) {
-				str.append(line);
-			}
-		} catch (FileNotFoundException e) {
-			logger.error(e);
-		} catch (IOException e) {
-			logger.error(e);
-		}
+		String filePath = "src/test/resources/createUser.json";
 
-		logger.info("Input Json Data::: " + str.toString());
-		Response response = BaseConfig.postRequest(requestUri, str.toString());
+		Response response = BaseConfig.postRequest(requestUri, TestUtils.getPayload(filePath).toString());
 
-		
 		logger.info("***********  Checking Response Body **********");
 		int statusCode = response.getStatusCode();
 		logger.info("Status Code is ==>" + statusCode);
-		Assert.assertEquals(400,statusCode);
+		Assert.assertEquals(400, statusCode);
 
 		logger.info("***********  Checking Status Line **********");
 

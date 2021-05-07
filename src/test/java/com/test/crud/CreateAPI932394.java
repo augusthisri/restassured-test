@@ -1,15 +1,10 @@
 package com.test.crud;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.test.base.BaseConfig;
+import com.test.utils.TestUtils;
 
 import io.restassured.response.Response;
 
@@ -21,24 +16,9 @@ public class CreateAPI932394 extends BaseConfig {
 	@Test
 	public void createUser() {
 
-		logger.info("*********Started CreateAPIUser **********");
+		String filePath = "src/test/resources/createUser.json";
 
-		StringBuffer str = new StringBuffer();
-		File file = new File("src/test/resources/createUser.json");
-		
-		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-			String line = "";
-			while ((line = in.readLine()) != null) {
-				str.append(line);
-			}
-		} catch (FileNotFoundException e) {
-			logger.error(e);
-		} catch (IOException e) {
-			logger.error(e);
-		}
-
-		logger.info("Input Json Data::: " + str.toString());
-		Response response = BaseConfig.postRequest(createRequestUri, str.toString());
+		Response response = BaseConfig.postRequest(createRequestUri, TestUtils.getPayload(filePath).toString());
 
 		logger.info("***********  Checking Response Body **********");
 		logger.info("Response Body==>" + response.asString());
@@ -67,25 +47,15 @@ public class CreateAPI932394 extends BaseConfig {
 		String contentLength = response.header("Content-Length");
 		Assert.assertTrue(Integer.parseInt(contentLength) < 150);
 	}
+
 	@Test
 	public void registerUser() {
+
 		logger.info("*********Started CreateAPIUser **********");
 
-		StringBuffer str = new StringBuffer();
-		File file = new File("src/test/resources/registerUser.json");
-		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-			String line = "";
-			while ((line = in.readLine()) != null) {
-				str.append(line);
-			}
-		} catch (FileNotFoundException e) {
-			logger.error(e);
-		} catch (IOException e) {
-			logger.error(e);
-		}
+		String filePath = "src/test/resources/registerUser.json";
 
-		logger.info("Input Json Data::: " + str.toString());
-		Response response = BaseConfig.postRequest(registerRequestUri, str.toString());
+		Response response = BaseConfig.postRequest(registerRequestUri, TestUtils.getPayload(filePath).toString());
 
 		logger.info("***********  Checking Response Body **********");
 		int statusCode = response.getStatusCode();

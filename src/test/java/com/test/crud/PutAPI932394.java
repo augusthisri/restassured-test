@@ -1,16 +1,10 @@
 package com.test.crud;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.test.base.BaseConfig;
+import com.test.utils.TestUtils;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -24,29 +18,16 @@ public class PutAPI932394 extends BaseConfig {
 
 		logger.info("*********Started PutAPI932394  **********");
 
-		StringBuffer str = new StringBuffer();
-		File file = new File("src/test/resources/putData.json");
-		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-			String line = "";
-			while ((line = in.readLine()) != null) {
-				str.append(line);
-			}
-		} catch (FileNotFoundException e) {
-			logger.error(e);
-		} catch (IOException e) {
-			logger.error(e);
-		}
+		String filePath = "src/test/resources/putData.json";
 
-
-		logger.info("Input Json Data::: " + str.toString());
-		Response response = BaseConfig.putRequest(requestUri, str.toString());
+		Response response = BaseConfig.putRequest(requestUri, TestUtils.getPayload(filePath).toString());
 
 		logger.info("***********  Checking Response Body **********");
 
 		JsonPath responseJson = response.getBody().jsonPath();
 		logger.info("Response Body==>" + response.getBody().asString());
 		Assert.assertEquals(responseJson.get("FirstName"), "morpheus");
-		Assert.assertEquals(responseJson.get("LastName"), "zion resident");
+		Assert.assertEquals(responseJson.get("LastName"), "zion leader");
 
 		logger.info("ressponseJson " + responseJson.prettify());
 		logger.info("***********  Checking Response Body **********");
@@ -60,6 +41,5 @@ public class PutAPI932394 extends BaseConfig {
 		String contentType = response.header("Content-Type");
 		logger.info("Content-Type is ==>" + response.getHeader(contentType));
 	}
-
 
 }

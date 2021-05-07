@@ -37,8 +37,7 @@ public class GetAPI932394 extends BaseConfig {
 
 		List<Object> responseDataList = responseJson.getList("data");
 		responseDataList.stream().forEach(System.out::println);
-		 
-	
+
 		int statusCode = BaseConfig.getRequest(requestUri).getStatusCode();
 		logger.info("Status Code is ==>" + statusCode);
 		Assert.assertEquals(statusCode, 200);
